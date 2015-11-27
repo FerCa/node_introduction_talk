@@ -1,34 +1,39 @@
-
-var request = require('request');
 var fs = require('fs');
+var express = require('express');
+var request = require('request');
+
+var app = express();
+
+app.listen(3101, function () {
+    console.log('server up and running!');
+});
 
 
-fs.readFile('./name', 'utf8', function(error, data) {
+app.get('/fuckoff', function(req, res) {
 
-    if(error) {
-        console.log('Error retrieving name:', error);
-        return;
-    }
+    fs.readFile('./name', 'utf8', function (error, name) {
 
-    var options = {
-        url: 'http://www.foaas.com/you/' + data + '/FerCa',
-        headers: {
-            'Accept': 'application/json'
-        },
-        json: true
-    };
-
-    request(options, function(error, response, body) {
-        if(error) {
+        if (error) {
             console.log('Error requesting API:', error);
             return;
         }
 
-        console.log(body.message);
+        var options = {
+            url: 'http://www.foaas.com/you/' + name + '/FerCa',
+            headers: {
+                'Accept': 'application/json'
+            },
+            json: true
+        };
+
+        request(options, function(error, response, body) {
+            if(error) {
+                console.log('Error requesting API:', error);
+                return;
+            }
+
+            res.send(body.message);
+        });
+
     });
-
 });
-
-
-console.log('Finished?');
-

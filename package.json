@@ -2,6 +2,7 @@
   "name": "node_talk_example",
   "version": "0.0.0",
   "dependencies": {
+    "express": "^4.13.3",
     "promise": "^7.0.4",
     "request": "^2.65.0"
   },
